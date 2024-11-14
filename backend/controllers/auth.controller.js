@@ -1,6 +1,7 @@
 import User from "../models/user.model.js"
 import jwt from "jsonwebtoken"
 import {rtokens} from "../data/rtokens.js"
+import {v4 as uuidv4} from "uuid";
 import { decrypt } from "dotenv"
 
 const generateTokens = (userId) => {
@@ -9,16 +10,16 @@ const generateTokens = (userId) => {
     return {accessToken, refreshToken}
 }
 
-const storeRefreshToken = async (userId, refresh_token) => {
+const storeRefreshToken = async (userId, refresh_token, uniqueId) => {
     try {
-        await rtokens.set(`refresh_token:${userId}`, refresh_token, "EX", 30 * 24 * 60 * 60)
+        await rtokens.set(`refresh_token:${userId}:${uniqueId}`, refresh_token, "EX", 30 * 24 * 60 * 60)
     } catch (error) {
         console.log(error)
     }
 
 }
 
-const setCookies = (res, accessToken, refreshToken) => {
+const setCookies = (res, accessToken, refreshToken, uniqueId) => {
     res.cookie("accessToken", accessToken, {
         httpOnly: true,
         sameSite: "strict",
@@ -26,6 +27,13 @@ const setCookies = (res, accessToken, refreshToken) => {
         maxAge: 30 * 60 *  1000
     })
     res.cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        sameSite: "strict",
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 30 * 24 * 60 * 60 * 1000
+    })
+
+    res.cookie("uniqueId", uniqueId, {
         httpOnly: true,
         sameSite: "strict",
         secure: process.env.NODE_ENV === "production",
@@ -48,9 +56,10 @@ export const signup = async (req, res) => {
         })
 
         const {accessToken, refreshToken} = generateTokens(user._id)
-        await storeRefreshToken(user._id, refreshToken)
+        const uniqueId = uuidv4()
+        await storeRefreshToken(user._id, refreshToken, uniqueId)
 
-        setCookies(res, accessToken, refreshToken)
+        setCookies(res, accessToken, refreshToken, uniqueId)
     
         res.status(201).json({_id: user._id, name:user.name, email:user.email, role:user.role})
     } catch (error) {
@@ -65,9 +74,10 @@ export const login = async (req, res) => {
 
         if(user && (await user.matchPassword(password))) {
             const {accessToken, refreshToken} = generateTokens(user._id)
-            await storeRefreshToken(user._id, refreshToken)
+            const uniqueId = uuidv4()
+            await storeRefreshToken(user._id, refreshToken, uniqueId)
 
-            setCookies(res, accessToken, refreshToken)
+            setCookies(res, accessToken, refreshToken, uniqueId)
             res.json({
                 _id: user._id,
                 name:user.name,
@@ -85,9 +95,10 @@ export const login = async (req, res) => {
 export const logout = async (req, res) => {  
     try {
         const refreshToken = req.cookies.refreshToken
-        if(refreshToken){
+        const uniqueId = req.cookies.uniqueId
+        if(refreshToken && uniqueId) {
             const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET)
-            await rtokens.del(`refresh_token:${decoded.userId}`)
+            await rtokens.del(`refresh_token:${decoded.userId}:${uniqueId}`)
         }
 
         res.clearCookie("accessToken")
@@ -101,12 +112,13 @@ export const logout = async (req, res) => {
 export const refreshToken = async (req, res) => {
     try {
         const refreshToken = req.cookies.refreshToken
-        if(!refreshToken)  {
-            return res.status(402).json({message: "Refresh token not found"})
+        const uniqueId = req.cookies.uniqueId
+        if(!refreshToken || !uniqueId)  {
+            return res.status(402).json({message: "Refresh token or uniqueId not found"})
         }
         
         const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET)
-        const storedToken = await rtokens.get(`refresh_token:${decoded.userId}`)
+        const storedToken = await rtokens.get(`refresh_token:${decoded.userId}:${uniqueId}`)
 
         if(storedToken !== refreshToken) {
             return res.status(403).json({message: "Invalid refresh token"})
