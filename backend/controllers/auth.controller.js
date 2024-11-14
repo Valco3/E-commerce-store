@@ -103,6 +103,7 @@ export const logout = async (req, res) => {
 
         res.clearCookie("accessToken")
         res.clearCookie("refreshToken")
+        res.clearCookie("uniqueId")
         res.json({message: "Logout successful"})
     } catch (error) {
         res.status(500).json({message: error.message})
