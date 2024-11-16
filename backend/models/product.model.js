@@ -20,6 +20,11 @@ const productSchema = new mongoose.Schema({
         required: [true, "Please add a price"],
         min: 0
     },
+    quantity: {
+        type: Number,
+        required: [true, "Please add a quantity"],
+        min: 0
+    },
     image: {
         type: String,
         default: "",

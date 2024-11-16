@@ -23,5 +23,10 @@ export const getFeaturedProducts = async (req, res) => {
 }
 
 export const createProduct = async (req, res) => {
-    
+    try {
+        const {name, category, description, price, quantity, image} = req.body;
+        
+    } catch (error) {
+        
+    }
 }
