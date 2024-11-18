@@ -10,6 +10,10 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: [true, "Please add a category"]
     },
+    producer:{
+        type: String,
+        required: [true, "Please add a producer"]
+    },
     description: {
         type: String,
         default: "",
