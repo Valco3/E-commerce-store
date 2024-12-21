@@ -1,52 +1,3 @@
-// import {ShoppingCart, UserPlus, LogIn, LogOut, Lock, User} from "lucide-react"
-// import { Link } from 'react-router-dom'
-
-// const Navbar = () => {
-//     const user = false;
-//     const isAdmin = true;
-//   return (
-    
-//     <header>
-//         <Link to='/'> Spring-mart </Link>
-//         <nav>
-//             <Link to='/'>Home</Link>
-//             {user && (
-//                 <Link to={"/cart"}>
-//                     <ShoppingCart />
-//                     <span>Cart</span>
-//                     <span>3</span>
-//                 </Link>
-//             )}
-//             {isAdmin && (
-//                 <Link>
-//                     <Lock />
-//                     <span>Dashboard</span>
-//                 </Link>
-//             )}
-
-//             {user ? (
-//                 <button>
-//                     <LogOut />
-//                     <span>Logout</span>
-//                 </button>
-//             ) : (
-//                 <>
-//                     <Link to={"/signup"}>
-//                         <UserPlus />
-//                         Sign Up
-//                     </Link>
-//                     <Link to={"/login"}>
-//                         <LogIn />
-//                         Login
-//                     </Link>
-//                 </>
-//             )}
-//         </nav>
-//     </header>
-//   )
-// }
-
-// export default Navbar
 
 
 import { ShoppingCart, UserPlus, LogIn, LogOut, Lock } from "lucide-react";
@@ -65,7 +16,7 @@ const Navbar = () => {
           to="/"
           className="text-2xl font-bold text-blue-600 hover:text-blue-800"
         >
-          Spring-mart
+          Спрингмарт
         </Link>
         <nav className="flex space-x-6 items-center">
           {/* <Link
@@ -99,7 +50,7 @@ const Navbar = () => {
           {user ? (
             <button className="flex items-center space-x-2 text-gray-700 hover:text-blue-600" onClick={logout}>
               <LogOut className="w-5 h-5" />
-              <span>Logout</span>
+              <span>Изход</span>
             </button>
           ) : (
             <>
@@ -108,14 +59,14 @@ const Navbar = () => {
                 className="flex items-center space-x-2 text-gray-700 hover:text-blue-600"
               >
                 <UserPlus className="w-5 h-5" />
-                <span>Sign Up</span>
+                <span>Регистрация</span>
               </Link>
               <Link
                 to={"/login"}
                 className="flex items-center space-x-2 text-gray-700 hover:text-blue-600"
               >
                 <LogIn className="w-5 h-5" />
-                <span>Login</span>
+                <span>Вход</span>
               </Link>
             </>
           )}

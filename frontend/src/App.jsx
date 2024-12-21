@@ -2,6 +2,7 @@ import { Route, Routes, Navigate } from 'react-router-dom'
 import HomePage from './pages/HomePage.jsx'
 import SignUpPage from './pages/SignUpPage.jsx'
 import LoginPage from './pages/LoginPage.jsx'
+import AdminPage from './pages/AdminPage.jsx'
 import Navbar from './components/Navbar.jsx'
 import { Toaster } from 'react-hot-toast'
 import { useUserStore } from './stores/useUserStore.js'
@@ -13,9 +14,9 @@ function App() {
   useEffect(() => {
     checkAuth()
   }, [checkAuth])
-
+//#cbd5e1
   return (
-    <div className='min-h-screen bg-gray-200 text-stone-900 relative overflow-hidden'>
+    <div className='min-h-screen bg-slate-200 text-stone-900 relative overflow-hidden'>
 
       {/* pt-20 */}
       <div className='relative z-50 pt-0'>
@@ -25,6 +26,7 @@ function App() {
           <Route path='/' element={<HomePage/>}/>
           <Route path='/signup' element={user ? <Navigate to='/'/> : <SignUpPage/>}/>
           <Route path='/login' element={user ? <Navigate to='/'/> : <LoginPage/>}/>
+          <Route path='/admin' element={user?.role == "admin" || user?.role == "superadmin" ? <AdminPage /> : <Navigate to='/'/>}/>
         </Routes>
       </div>
       <Toaster/>
