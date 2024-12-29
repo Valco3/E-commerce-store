@@ -38,10 +38,19 @@ const uploadImage = async (req, res) => {
 }
 
 export const createProduct = async (req, res) => {
+    console.log(req.body.name)
+        console.log(req.body.category)
+        console.log(req.body.description)
+        console.log(req.body.price)
+        console.log(req.body.quantity)
+        console.log(req.body.image)
     try {
         await uploadImage(req, res)
+        
 
-        const {name, category, description, price, quantity, image} = req.body;
+
+
+        const {name, category, description, price, quantity, image, producer} = req.body;
         console.log(image)
         
         const product = await Product.create({
@@ -50,12 +59,17 @@ export const createProduct = async (req, res) => {
             description,
             price,
             quantity,
-            image: "./images/" + image
+            producer,
+            image: "http://localhost:5000/images/" + image
         })
 
         res.status(201).json(product)
     } catch (error) {
-        fs.unlinkSync("./images/" + req.body.image)
+        console.log("Error creating a product", error)
+        if(req.body.image){
+            fs.unlinkSync("./backend/images/" + req.body.image)
+        }
+        
         res.status(500).json({message: error.message})
     }
 }

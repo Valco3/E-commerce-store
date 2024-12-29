@@ -15,8 +15,17 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(express.json());
+app.use(express.json({limit: "15mb"}));
 app.use(cookieParser());
+
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Serve static files from the "images" folder inside "backend"
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use("/api/auth", authRoutes)
 app.use("/api/products", productRoutes)
