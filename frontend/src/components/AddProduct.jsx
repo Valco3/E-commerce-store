@@ -11,6 +11,7 @@ const categories = [
   "eggs",
   "jams",
   "wines",
+  "nuts"
 ];
 
 const AddProduct = () => {

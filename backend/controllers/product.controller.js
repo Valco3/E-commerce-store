@@ -4,6 +4,7 @@ import fs from "fs";
 import { get } from "http";
 
 export const getAllProducts = async (req, res) => {
+    console.log("Someone attemted to get all products")
     try {
         const products = await Product.find({});
         res.json({products})
@@ -60,7 +61,7 @@ export const createProduct = async (req, res) => {
             price,
             quantity,
             producer,
-            image: "http://localhost:5000/images/" + image
+            image: process.env.SAVE_MODE === "local" ? "http://localhost:5000/images/" + image :"http://192.168.0.102:5000/images/" + image 
         })
 
         res.status(201).json(product)
@@ -118,6 +119,7 @@ export const getReccomendations = async (req, res) => {
 }
 
 export const getProductsByCategory = async (req, res) => {
+    console.log("Someone attempted to get all products")
     try {
         const {category} = req.params
         const products = await Product.find({category})

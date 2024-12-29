@@ -27,7 +27,7 @@ const LoginPage = () => {
         transition={{ duration: 0.8, delay: 0.2 }}
       >
         <h2 className="text-2xl font-bold text-center text-blue-600 mb-6">
-          Create Your Account
+          Вход в профил
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -36,7 +36,7 @@ const LoginPage = () => {
           {/* Email */}
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-              Email Address
+              Имейл адрес
             </label>
             <div className="mt-1">
               <input
@@ -54,7 +54,7 @@ const LoginPage = () => {
           {/* Password */}
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-              Password
+              Парола
             </label>
             <div className="mt-1">
               <input
@@ -63,7 +63,7 @@ const LoginPage = () => {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="securepass123"
+                placeholder="сигурнапарола123"
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400"
               />
             </div>
@@ -79,12 +79,12 @@ const LoginPage = () => {
             {loading ? (
               <>
                 <Loader className="animate-spin w-5 h-5" aria-hidden="true" />
-                <span>Loading ...</span>
+                <span>Зарежда ...</span>
               </>
             ) : (
               <>
                 <LogIn className="w-5 h-5" aria-hidden="true" />
-                <span>Login</span>
+                <span>Вход</span>
               </>
             )}
           </button>
@@ -92,12 +92,12 @@ const LoginPage = () => {
 
         {/* Login Redirect */}
         <p className="mt-4 text-sm text-center text-gray-600">
-          Don&apos;t have an account?{" "}
+          Нямаш профил?{" "}
           <Link
             to="/signup"
             className="text-blue-600 hover:text-blue-800 font-medium"
           >
-            Sign up <ArrowRight className="inline h-4 w-4" />
+            Регистрирай се <ArrowRight className="inline h-4 w-4" />
           </Link>
         </p>
       </motion.div>

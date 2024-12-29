@@ -138,14 +138,13 @@ const SignUpPage = () => {
         transition={{ duration: 0.8, delay: 0.2 }}
       >
         <h2 className="text-2xl font-bold text-center text-blue-600 mb-6">
-          Create Your Account
+          Създаване на профил
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Full Name */}
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-              Full Name
+              Име
             </label>
             <div className="mt-1">
               <input
@@ -154,7 +153,7 @@ const SignUpPage = () => {
                 required
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                placeholder="Ivan Ivanov"
+                placeholder="Иван Иванов"
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400"
               />
             </div>
@@ -163,7 +162,7 @@ const SignUpPage = () => {
           {/* Email */}
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-              Email Address
+              Имейл адрес
             </label>
             <div className="mt-1">
               <input
@@ -181,7 +180,7 @@ const SignUpPage = () => {
           {/* Password */}
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-              Password
+              Парола
             </label>
             <div className="mt-1">
               <input
@@ -190,7 +189,7 @@ const SignUpPage = () => {
                 required
                 value={formData.password}
                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                placeholder="securepass123"
+                placeholder="сигурнапарола123"
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400"
               />
             </div>
@@ -202,7 +201,7 @@ const SignUpPage = () => {
               htmlFor="confirmPassword"
               className="block text-sm font-medium text-gray-700"
             >
-              Confirm Password
+              Потвърди паролата
             </label>
             <div className="mt-1">
               <input
@@ -211,7 +210,7 @@ const SignUpPage = () => {
                 required
                 value={formData.confirmPassword}
                 onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-                placeholder="securepass123"
+                placeholder="сигурнапарола123"
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400"
               />
             </div>
@@ -226,12 +225,12 @@ const SignUpPage = () => {
             {loading ? (
               <>
                 <Loader className="animate-spin w-5 h-5" aria-hidden="true" />
-                <span>Loading ...</span>
+                <span>Зарежда ...</span>
               </>
             ) : (
               <>
                 <UserPlus className="w-5 h-5" aria-hidden="true" />
-                <span>Sign Up</span>
+                <span>Регистрирай се</span>
               </>
             )}
           </button>
@@ -239,12 +238,12 @@ const SignUpPage = () => {
 
         {/* Login Redirect */}
         <p className="mt-4 text-sm text-center text-gray-600">
-          Already have an account?{" "}
+          Вече имаш профил?{" "}
           <Link
             to="/login"
             className="text-blue-600 hover:text-blue-800 font-medium"
           >
-            Log in <ArrowRight className="inline h-4 w-4" />
+            Вход в профил <ArrowRight className="inline h-4 w-4" />
           </Link>
         </p>
       </motion.div>

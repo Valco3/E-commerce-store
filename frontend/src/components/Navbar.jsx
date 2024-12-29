@@ -31,7 +31,7 @@ const Navbar = () => {
               className="relative flex items-center space-x-2 text-gray-700 hover:text-blue-600"
             >
               <ShoppingCart className="w-5 h-5" />
-              <span>Cart</span>
+              <span>Количка</span>
               <span className="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-full absolute -top-2 -right-2">
                 3
               </span>
@@ -43,7 +43,7 @@ const Navbar = () => {
               className="flex items-center space-x-2 text-gray-700 hover:text-blue-600"
             >
               <Lock className="w-5 h-5" />
-              <span>Dashboard</span>
+              <span>Администраторски панел</span>
             </Link>
           )}
 
