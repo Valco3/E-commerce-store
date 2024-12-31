@@ -3,11 +3,13 @@
 import { ShoppingCart, UserPlus, LogIn, LogOut, Lock } from "lucide-react";
 import { Link } from "react-router-dom";
 import {useUserStore} from '../stores/useUserStore.js'
+import {useCartStore} from '../stores/useCartStore.js'  
 
 const Navbar = () => {
   // const user = false;
   const {user, logout} = useUserStore()
   const isAdmin = user?.role === "admin" || user?.role === "superadmin";
+  const {cart} = useCartStore()
 
   return (
     <header className="bg-gray-100 text-stone-900 shadow-md">
@@ -32,9 +34,9 @@ const Navbar = () => {
             >
               <ShoppingCart className="w-5 h-5" />
               <span>Количка</span>
-              <span className="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-full absolute -top-2 -right-2">
-                3
-              </span>
+              {cart.length > 0 && <span className="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-full absolute -top-2 -right-2">
+                {cart.length}
+              </span>}
             </Link>
           )}
           {isAdmin && (
