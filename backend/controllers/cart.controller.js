@@ -78,3 +78,13 @@ export const getCartProducts = async (req, res) => {
         res.status(500).json({message: error.message})
     }
 }
+
+export const clearCart = async (req, res) => {
+    try {
+        req.user.cart = []
+        await req.user.save()
+        res.json(req.user.cart)
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+}

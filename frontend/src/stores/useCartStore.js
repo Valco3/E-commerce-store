@@ -74,6 +74,10 @@ export const useCartStore = create((set, get) => ({
 
     clearCart: async () => {
         set({ cart: [] , total: 0 });
-
+        try {
+            await axios.delete("/cart");
+        } catch (error) {
+            toast.error(error.response?.data?.message || "Something went wrong");
+        }
     }
 }));
