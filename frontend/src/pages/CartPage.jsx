@@ -35,7 +35,7 @@ const CartPage = () => {
                         )}
                     </div>
 
-                    {/* Right section: Order Summary */}
+                    
                     {cart.length > 0 && (
                         <div className="lg:w-1/3 mt-8 lg:mt-0 lg:ml-8">
                             <OrderSummary />
@@ -43,7 +43,7 @@ const CartPage = () => {
                     )}
                 </div>
 
-                {/* Additional Component */}
+                
                 {cart.length > 0 && <RecommendedItems />}
             </div>
         </div>

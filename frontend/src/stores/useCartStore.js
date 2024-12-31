@@ -70,5 +70,10 @@ export const useCartStore = create((set, get) => ({
             
         }))
         get().calculateTotal();
+    },
+
+    clearCart: async () => {
+        set({ cart: [] , total: 0 });
+
     }
 }));

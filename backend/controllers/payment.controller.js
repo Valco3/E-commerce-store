@@ -3,7 +3,7 @@ import Order from "../models/order.model.js"
 
 export const createCheckoutSession = async (req, res) => {
     try {
-        const products = req.body
+        const {products} = req.body
         if(!Array.isArray(products) || products.length === 0) {
             return res.status(400).json({message: "Please provide an array of products"});
         }
@@ -11,7 +11,7 @@ export const createCheckoutSession = async (req, res) => {
         let totalAmount = 0;
 
         const lineItems = products.map(product => {
-            const amount = product.price * 100;
+            const amount = Math.round(product.price * 100);
             totalAmount += amount * product.quantity;
 
             return{
@@ -22,7 +22,8 @@ export const createCheckoutSession = async (req, res) => {
                         images: [product.image]
                     },
                     unit_amount: amount
-                }
+                },
+                quantity: product.quantity || 1
             }
         })
 
@@ -30,11 +31,11 @@ export const createCheckoutSession = async (req, res) => {
             payment_method_types: ["card"],
             line_items: lineItems,
             mode: "payment",
-            success_url: `${process.env.CLIENT_URL}? session_id={CHECKOUT_SESSION_ID}`,
-            cancel_url: `${process.env.CLIENT_URL}? session_id={CHECKOUT_SESSION_ID}`,
+            success_url: process.env.SAVE_MODE === "local" ? `${process.env.CLIENT_URL}/purchase-success?session_id={CHECKOUT_SESSION_ID}` : "http://192.168.0.102:5173/purchase-success?session_id={CHECKOUT_SESSION_ID}",
+            cancel_url: `${process.env.CLIENT_URL}/purchase-cancel`,
             metadata: {
                 userId: req.user._id.toString(),
-                products: JSON.stringify(products.map(product => ({id: product.id, quantity: product.quantity, price: product.price})))
+                products: JSON.stringify(products.map((product) => ({id: product._id, quantity: product.quantity, price: product.price})))
             }
              
         })
@@ -52,7 +53,7 @@ export const checkoutSuccess = async (req, res) => {
 
         if(session.payment_status === "paid") {
             const products = JSON.parse(session.metadata.products);
-            const newOrder = await Order.create({
+            const newOrder = new Order({
                 user:session.metadata.userId,
                 products: products.map(product => ({
                     product: product.id,
@@ -60,7 +61,7 @@ export const checkoutSuccess = async (req, res) => {
                     price: product.price
                 })),
                 totalAmount: session.amount_total / 100,
-                stripeSessionId: session.id
+                stripeSessionId: sessionId
             })
 
             await newOrder.save();

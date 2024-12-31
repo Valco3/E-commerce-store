@@ -14,8 +14,8 @@ export const useUserStore = create((set, get) => ({
 
         if(password !== confirmPassword) {
             set({loading: false})
-            return toast.error('Passwords do not match')
-        }else{
+            return toast.error('Паролите не съвпадат')
+        }
             try {
                 const res = await axios.post('/auth/signup', {name, email, password});
                 set({user: res.data, loading: false})
@@ -23,7 +23,7 @@ export const useUserStore = create((set, get) => ({
                 set({loading: false})
                 toast.error(error.response.data.message || 'Something went wrong')
             }
-        }
+        
     },
 
     login : async (email, password) => {
@@ -55,5 +55,47 @@ export const useUserStore = create((set, get) => ({
         } catch (error) {
             set({checkingAuth: false, user: null})
         }
-    }
+    },
+
+	refreshToken: async () => {
+		// Prevent multiple simultaneous refresh attempts
+		if (get().checkingAuth) return;
+
+		set({ checkingAuth: true });
+		try {
+			const response = await axios.post("/auth/refresh-token");
+			set({ checkingAuth: false });
+			return response.data;
+		} catch (error) {
+			set({ user: null, checkingAuth: false });
+			throw error;
+		}
+	}
 }))
+
+let refreshPromise = null;
+axios.interceptors.response.use(
+    (response) => response,
+    async(error) => {
+        const originalRequest = error.config;
+        if(error.response.status === 401 && !originalRequest._retry) {
+            originalRequest._retry = true;
+
+            try {
+                if(refreshPromise){
+                    await refreshPromise
+                    return axios (originalRequest)
+                }
+
+                refreshPromise = useUserStore.getState().refreshToken()
+                await refreshPromise
+                refreshPromise = null
+                return axios(originalRequest)
+            } catch (error) {
+                useUserStore.getState().logout()
+                return Promise.reject(error)
+            }
+        }
+        return Promise.reject(error)
+    }
+)

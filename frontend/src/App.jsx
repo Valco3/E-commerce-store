@@ -6,16 +6,18 @@ import AdminPage from './pages/AdminPage.jsx'
 import CategoryPage from './pages/CategoryPage.jsx'
 import Navbar from './components/Navbar.jsx'
 import CartPage from './pages/CartPage.jsx'
+import PurchaseSuccessPage from './pages/PurchaseSuccessPage.jsx'
+import PurchaseCancelPage from './pages/PurchaseCancelPage.jsx'
 import { Toaster } from 'react-hot-toast'
 import { useUserStore } from './stores/useUserStore.js'
 import { useEffect } from 'react'
 import { useCartStore } from './stores/useCartStore.js'
 
 function App() {
-  const {user, checkAuth} = useUserStore()
+  const {user, checkAuth, checkingAuth} = useUserStore()
   const {getCartItems} = useCartStore()
-  useEffect(() => {
-    checkAuth()
+  useEffect(() => async () => {
+    await checkAuth()
   }, [checkAuth])
 
   useEffect(() => {
@@ -27,6 +29,10 @@ function App() {
     document.title = 'Спрингмарт';
 }, []);
 //#cbd5e1  bg-slate-200
+console.log(user)
+if (checkingAuth) {
+  return <div>Loading...</div>; // Render a loading spinner or placeholder
+}
   return (
     <div className='min-h-screen bg-slate-300 text-stone-900 relative overflow-hidden'>
       
@@ -39,9 +45,17 @@ function App() {
           <Route path='/' element={<HomePage/>}/>
           <Route path='/signup' element={user ? <Navigate to='/'/> : <SignUpPage/>}/>
           <Route path='/login' element={user ? <Navigate to='/'/> : <LoginPage/>}/>
-          <Route path='/admin' element={user?.role == "admin" || user?.role == "superadmin" ? <AdminPage /> : <Navigate to='/'/>}/>
+          <Route path='/admin' element={user?.role === "admin" || user?.role === "superadmin" ? <AdminPage /> : <Navigate to='/'/>}/>
           <Route path='/category/:category' element={<CategoryPage/>}/>
           <Route path='/cart' element={user? <CartPage/> : <Navigate to='/login'/>}/> 
+          {/* <Route path='/purchase-success' element={user? <PurchaseSuccessPage/> : <Navigate to= '/login'/>} /> */}
+          {/* <Route
+						path='/purchase-success'
+						element={user ? <PurchaseSuccessPage /> : <Navigate to='/login' />}
+					/> */}
+          <Route path='/purchase-success' element={user? <PurchaseSuccessPage/> : <Navigate to='/login'/>} />
+          <Route path='/purchase-cancel' element={user? <PurchaseCancelPage/> : <Navigate to='/login'/>} />
+
         </Routes>
       </div>
       <Toaster/>

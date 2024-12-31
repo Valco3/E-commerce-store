@@ -1,7 +1,6 @@
 import express from "express";
 import { protectRoute } from "../middleware/auth.middleware.js";
 import { createCheckoutSession, checkoutSuccess } from "../controllers/payment.controller.js";
-import {stripe} from "../data/stripe.js"
 
 const router = express.Router();
 
