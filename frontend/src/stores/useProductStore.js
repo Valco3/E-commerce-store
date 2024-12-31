@@ -16,7 +16,7 @@ export const useProductStore = create((set) => ({
               });
             set((previousState) => ({products: [...previousState.products, res.data], loading: false}))
         } catch (error) {
-            toast.error(error.response.data.message || 'Something went wrong')
+            toast.error(error.response.data.message || 'Грешка при създаване на продукт')
             set({loading: false})
         }
     },
@@ -26,7 +26,7 @@ export const useProductStore = create((set) => ({
             const res = await axios.get("/products")
             set({products: res.data.products, loading: false})
         } catch (error) {
-            toast.error(error.response.data.message || 'Something went wrong')
+            toast.error(error.response.data.message || 'Грешка при извличане на продукти')
             set({loading: false})
         }
     },
@@ -40,7 +40,7 @@ export const useProductStore = create((set) => ({
             }))
         } catch (error) {
             set({loading: false}),
-            toast.error(error.response.data.message || 'Something went wrong')
+            toast.error(error.response.data.message || 'Грешка при изтриване на продукт')
         }
     },
     toggleFeaturedProduct: async (productId) => {
@@ -55,7 +55,7 @@ export const useProductStore = create((set) => ({
             }))
         } catch (error) {
             set({loading: false}),
-            toast.error(error.response.data.message || 'Something went wrong')
+            toast.error(error.response.data.message || 'Грешка при отличаване на продукт')
         }
     },
 
@@ -66,7 +66,7 @@ export const useProductStore = create((set) => ({
             set({products: response.data.products, loading: false})
         } catch (error) {
             set({loading: false}),
-            toast.error(error.response.data.message || 'Something went wrong')
+            toast.error(error.response.data.message || 'Грешка при извличане на категория продукти')
         }
     }
 }))

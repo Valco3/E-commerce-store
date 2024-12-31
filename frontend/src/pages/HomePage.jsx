@@ -67,7 +67,7 @@ import Snowfall from "react-snowfall";
 import { useUserStore } from "../stores/useUserStore";
 
 const categories = [
-  { href: "/vegetables", name: "Зеленчуци", image: "/category_vegetables.jpg" },
+  // { href: "/vegetables", name: "Зеленчуци", image: "/category_vegetables.jpg" },
   { href: "/fruits", name: "Плодове", image: "/category_fruits.jpg" },
   // { href: "/meats", name: "Месни продукти", image: "/category_meat.jpg" },
   // {

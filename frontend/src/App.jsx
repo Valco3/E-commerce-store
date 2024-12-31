@@ -19,8 +19,9 @@ function App() {
   }, [checkAuth])
 
   useEffect(() => {
+    if(!user) return
     getCartItems()
-  }, [getCartItems])
+  }, [getCartItems, user])
 
   useEffect(() => {
     document.title = 'Спрингмарт';

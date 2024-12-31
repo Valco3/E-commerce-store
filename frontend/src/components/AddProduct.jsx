@@ -7,7 +7,6 @@ const categories = [
   "fruits",
   "vegetables",
   "meats",
-  "dairys",
   "eggs",
   "jams",
   "wines",

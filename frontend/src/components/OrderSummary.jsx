@@ -11,7 +11,9 @@ const OrderSummary = () => {
         {/* <p>Общо</p> */}
         <p>{formattedTotal}лв</p>
       </div>
-      <button className="w-full rounded-md bg-gray-900 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">Направи поръчка</button>
+      <button className="w-full rounded-md bg-gray-900 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+        Направи поръчка
+      </button>
     </div>
   )
 }
