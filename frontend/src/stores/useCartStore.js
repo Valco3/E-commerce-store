@@ -63,13 +63,19 @@ export const useCartStore = create((set, get) => ({
             return
         }
 
-        await axios.put(`/cart/${productId}`, { quantity });
-        set((previousState) => ({
-            cart: previousState.cart.map((item) => 
-                (item._id === productId ? {...item, quantity} : item)),
-            
-        }))
-        get().calculateTotal();
+        try {
+            await axios.put(`/cart/${productId}`, { quantity });
+            set((previousState) => ({
+                cart: previousState.cart.map((item) => 
+                    (item._id === productId ? {...item, quantity} : item)),
+                
+            }))
+            get().calculateTotal();          
+        } catch (error) {
+            toast.error(error.response?.data?.message || "Проблем със сървъра");
+        }
+
+
     },
 
     clearCart: async () => {
