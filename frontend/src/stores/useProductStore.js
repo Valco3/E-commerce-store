@@ -42,7 +42,7 @@ export const useProductStore = create((set) => ({
             set({loading: false}),
             toast.error(error.response.data.message || 'Грешка при изтриване на продукт')
         }
-    },
+    },  
     toggleFeaturedProduct: async (productId) => {
         set({loading: true})
         try {

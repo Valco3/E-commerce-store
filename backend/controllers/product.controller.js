@@ -39,18 +39,8 @@ const uploadImage = async (req, res) => {
 }
 
 export const createProduct = async (req, res) => {
-    console.log(req.body.name)
-        console.log(req.body.category)
-        console.log(req.body.description)
-        console.log(req.body.price)
-        console.log(req.body.quantity)
-        console.log(req.body.image)
     try {
         await uploadImage(req, res)
-        
-
-
-
         const {name, category, description, price, quantity, image, producer} = req.body;
         console.log(image)
         
@@ -84,7 +74,9 @@ export const deleteProduct = async (req, res) => {
         }
 
         if(product.image) {
-            fs.unlinkSync("./backend/" + product.image)
+            const regex = /\/images.*/;
+            const match = product.image.match(regex); 
+            fs.unlinkSync("./backend/" + match[0])
             console.log("Image deleted")
         }
 

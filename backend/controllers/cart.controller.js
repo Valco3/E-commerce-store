@@ -2,20 +2,29 @@ import Product from "../models/product.model.js";
 
 export const addToCart = async (req, res) => {
     try {
-        const {productId} = req.body;
+        const { productId } = req.body;
         const user = req.user;
-        const existingItem = user.cart.find((item )=> item.id === productId);
-        if(existingItem) {
-            existingItem.quantity += 1;
-        }else{
-            user.cart.push(productId);
+        const existingItem = user.cart.find((item) => item.id === productId);
+        
+        const productInDatabase = await Product.findById(productId);
+        const currentQuantityInCart = existingItem ? existingItem.quantity : 0;
+        
+
+        if (productInDatabase.quantity <= currentQuantityInCart) {
+            throw new Error("Недостатъчна наличност на продукта");
         }
 
-        await user.save()
-        res.json(user.cart)
+        if (existingItem) {
+            existingItem.quantity += 1;
+        } else {
+            user.cart.push({ _id: productId, quantity: 1 });
+        }
+
+        await user.save();
+        res.json(user.cart);
     } catch (error) {
-        res.status(500).json({message: error.message})
-        console.log(error)
+        res.status(500).json({ message: error.message });
+        console.log(error);
     }
 }
 
@@ -38,29 +47,39 @@ export const removeFromCart = async (req, res) => {
 
 export const updateQuantity = async (req, res) => {
     try {
-        const {id:productId} = req.params;
-        const {quantity} = req.body;
-        const user = req.user
+        const { id: productId } = req.params;
+        const { quantity } = req.body;
+        const user = req.user;
+
         const existingItem = user.cart.find(item => item.id === productId);
         
-        //TO DO - CHECK IF QUANTITY IS VALID
-        
-
-        if(existingItem) {
-            if(quantity === 0) {
-                user.cart = user.cart.filter(item => item.id !== productId);
-                await user.save()
-                res.json(user.cart)
-            }
-
-            existingItem.quantity = quantity;
-            await user.save()
-            res.json(user.cart)
-        }else{
-            res.status(404).json({message: "Product not found"})
+        if (!existingItem) {
+            return res.status(404).json({ message: "Product not found in cart" });
         }
+
+        const productInDatabase = await Product.findById(productId);
+        console.log(productInDatabase);
+        
+        console.log(quantity);
+        if (quantity < 0) {
+            return res.status(400).json({ message: "Quantity cannot be negative" });
+        }
+
+        if (productInDatabase.quantity < quantity) {
+            throw new Error("Недостатъчна наличност на продукта");
+        }
+
+        if (quantity === 0) {
+            user.cart = user.cart.filter(item => item.id !== productId);
+        } else {
+            existingItem.quantity = quantity;
+        }
+
+        await user.save();
+        
+        res.json(user.cart);
     } catch (error) {
-        res.status(500).json({message: error.message})
+        res.status(500).json({ message: error.message });
     }
 }
 

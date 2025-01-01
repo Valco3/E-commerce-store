@@ -85,7 +85,7 @@ const AddProduct = () => {
         transition={{ duration: 0.8, delay: 0.2 }}
       >
         <h2 className="text-2xl font-bold text-center text-blue-600 mb-6">
-          Create a New Product
+          Добави продукт
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -95,7 +95,7 @@ const AddProduct = () => {
               htmlFor="name"
               className="block text-sm font-medium text-gray-700"
             >
-              Product Name
+              Име на продукт
             </label>
             <div className="mt-1">
               <input
@@ -118,7 +118,7 @@ const AddProduct = () => {
               htmlFor="description"
               className="block text-sm font-medium text-gray-700"
             >
-              Description
+              Описание
             </label>
             <div className="mt-1">
               <textarea
@@ -140,7 +140,7 @@ const AddProduct = () => {
               htmlFor="producer"
               className="block text-sm font-medium text-gray-700"
             >
-              Producer
+              Производител
             </label>
             <div className="mt-1">
               <input
@@ -163,7 +163,7 @@ const AddProduct = () => {
               htmlFor="price"
               className="block text-sm font-medium text-gray-700"
             >
-              Price
+              Цена
             </label>
             <div className="mt-1">
               <input
@@ -186,7 +186,7 @@ const AddProduct = () => {
               htmlFor="category"
               className="block text-sm font-medium text-gray-700"
             >
-              Category
+              Категория
             </label>
             <div className="mt-1">
               <select
@@ -199,7 +199,7 @@ const AddProduct = () => {
                 required
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400"
               >
-                <option value="">Select Category</option>
+                <option value="">Избери категория</option>
                 {Object.entries(categories).map(([key, value]) => (
                   <option key={value} value={key}>
                     {value}
@@ -215,7 +215,7 @@ const AddProduct = () => {
               htmlFor="quantity"
               className="block text-sm font-medium text-gray-700"
             >
-              Quantity
+              Количество
             </label>
             <div className="mt-1">
               <input
@@ -248,7 +248,7 @@ const AddProduct = () => {
               className="flex items-center justify-center w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 cursor-pointer"
             >
               <Upload className="w-6 h-6 mr-2 text-gray-500" />
-              Upload Image
+              Качи снимка
             </label>
             {newProduct.image && (
               <span className="ml-3 text-sm text-gray-400">
@@ -266,12 +266,12 @@ const AddProduct = () => {
             {loading ? (
               <>
                 <Loader className="animate-spin w-5 h-5" aria-hidden="true" />
-                <span>Adding...</span>
+                <span>Добавяне...</span>
               </>
             ) : (
               <>
                 <PlusCircle className="w-5 h-5" aria-hidden="true" />
-                <span>Add Product</span>
+                <span>Добави продукт</span>
               </>
             )}
           </button>
