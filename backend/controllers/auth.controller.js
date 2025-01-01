@@ -133,7 +133,7 @@ export const refreshToken = async (req, res) => {
             secure: process.env.NODE_ENV === "production",
             maxAge: 30 * 60 *  1000
         })
-
+        console.log("Token refreshed")
         res.json({message: "Token refreshed"})
 
     } catch (error) {
