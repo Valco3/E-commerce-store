@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { PlusCircle, Upload, Loader } from "lucide-react";
-import { motion } from "framer-motion";
+import { PlusCircle, Upload} from "lucide-react";
 import { useProductStore } from "../stores/useProductStore";
 
 const categories = {
@@ -20,37 +19,20 @@ const AddProduct = () => {
     quantity: "",
   });
 
-  const { createProduct, loading } = useProductStore();
+  const { createProduct} = useProductStore();
 
   const handleImageChange = (e) => {
-    const file = e.target.files[0]; // Get the selected file
+    const file = e.target.files[0]; 
     if (file) {
-      setNewProduct({ ...newProduct, image: file }); // Set the image file in the state
+      setNewProduct({ ...newProduct, image: file });
     }
   };
 
   const handleSubmit = async (e) => {
-    // e.preventDefault();
-    // await createProduct(newProduct);
-    // try {
-    //   setNewProduct({
-    //     name: "",
-    //     description: "",
-    //     producer: "",
-    //     price: "",
-    //     category: "",
-    //     image: "",
-    //     quantity: "",
-    //   })
-    // } catch (error) {
-    //   console.log(error)
-    // }
     e.preventDefault();
-
-    // Create FormData object to append the data and image as file
     const formData = new FormData();
 
-    // Append all product data fields to FormData
+    
     formData.append("name", newProduct.name);
     formData.append("description", newProduct.description);
     formData.append("producer", newProduct.producer);
@@ -58,13 +40,13 @@ const AddProduct = () => {
     formData.append("category", newProduct.category);
     formData.append("quantity", newProduct.quantity);
 
-    // Append the image file directly (not base64 string)
+   
     if (newProduct.image) {
       console.log("Has image");
-      formData.append("image", newProduct.image); // 'image' is the key expected by multer
+      formData.append("image", newProduct.image); 
     }
 
-    await createProduct(formData); // Pass FormData instead of newProduct
+    await createProduct(formData); 
     setNewProduct({
       name: "",
       description: "",
@@ -78,18 +60,15 @@ const AddProduct = () => {
 
   return (
     <div className="min-h-screen bg-gray-200 flex items-center justify-center text-stone-900">
-      <motion.div
+      <div
         className="bg-white rounded-lg shadow-lg p-8 w-full max-w-lg"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.2 }}
       >
         <h2 className="text-2xl font-bold text-center text-blue-600 mb-6">
           Добави продукт
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Name */}
+
           <div>
             <label
               htmlFor="name"
@@ -112,7 +91,7 @@ const AddProduct = () => {
             </div>
           </div>
 
-          {/* Description */}
+
           <div>
             <label
               htmlFor="description"
@@ -134,7 +113,7 @@ const AddProduct = () => {
             </div>
           </div>
 
-          {/* Producer */}
+
           <div>
             <label
               htmlFor="producer"
@@ -157,7 +136,7 @@ const AddProduct = () => {
             </div>
           </div>
 
-          {/* Price */}
+
           <div>
             <label
               htmlFor="price"
@@ -180,7 +159,7 @@ const AddProduct = () => {
             </div>
           </div>
 
-          {/* Category */}
+
           <div>
             <label
               htmlFor="category"
@@ -209,7 +188,6 @@ const AddProduct = () => {
             </div>
           </div>
 
-          {/* Quantity */}
           <div>
             <label
               htmlFor="quantity"
@@ -232,7 +210,6 @@ const AddProduct = () => {
             </div>
           </div>
 
-          {/* Image Upload  */}
 
           <div>
             <input
@@ -241,7 +218,7 @@ const AddProduct = () => {
               name="image"
               className="sr-only"
               accept="image/*"
-              onChange={handleImageChange} // Handle image selection
+              onChange={handleImageChange}
             />
             <label
               htmlFor="image"
@@ -257,13 +234,14 @@ const AddProduct = () => {
             )}
           </div>
 
-          {/* Submit Button */}
           <button
             type="submit"
-            disabled={loading}
+            // disabled={loading}
             className="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 disabled:opacity-50 flex justify-center items-center space-x-2"
           >
-            {loading ? (
+            <PlusCircle className="w-5 h-5" aria-hidden="true" />
+            <span>Добави продукт</span>
+            {/* {loading ? (
               <>
                 <Loader className="animate-spin w-5 h-5" aria-hidden="true" />
                 <span>Добавяне...</span>
@@ -273,10 +251,10 @@ const AddProduct = () => {
                 <PlusCircle className="w-5 h-5" aria-hidden="true" />
                 <span>Добави продукт</span>
               </>
-            )}
+            )} */}
           </button>
         </form>
-      </motion.div>
+      </div>
     </div>
   );
 };

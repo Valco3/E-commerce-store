@@ -1,116 +1,7 @@
-// import {useState} from 'react'
-// import {Link} from 'react-router-dom'
-// import { UserPlus, Mail, Lock, User, ArrowRight, Loader } from "lucide-react";
-// import {motion} from 'framer-motion'
-
-// const SignUpPage = () => {
-//     const loading = false;
-//     const [formData, setFormData] = useState({
-//         name:"",
-//         email:"",
-//         password:"",
-//         confirmPassword:""
-//     })
-
-//     const handleSubmit = (e) =>{
-//         e.preventDefault()
-//         console.log(formData)
-//     }
-//   return (
-//     <div>
-//         <motion.div 
-//             initial={{opacity:0, y:-20}}
-//             animate={{opacity:1, y:0}}
-//             transition={{duration:0.8, delay:0.2}}
-//         >
-//             <h2>Create your account</h2>
-            
-//         </motion.div>
-
-//         <motion.div 
-//             initial={{opacity:0, y:-20}}
-//             animate={{opacity:1, y:0}}
-//             transition={{duration:0.8, delay:0.2}}
-//         >
-//             <div>
-//                 <form onSubmit={handleSubmit} className='space-y-6'>
-//                     <div>
-//                         <label htmlFor="name">Full name</label>
-//                         <div>
-//                             <input 
-//                                 id= 'name'
-//                                 type= 'text'
-//                                 required
-//                                 value = {formData.name}
-//                                 onChange={(e) => setFormData({...formData, name: e.target.value})}
-//                                 placeholder='Ivan Ivanov'/>
-//                         </div>
-//                     </div>
-//                     <div>
-//                         <label htmlFor="email">Email address</label>
-//                         <div>
-//                             <input 
-//                                 id= 'email'
-//                                 type= 'email'
-//                                 required
-//                                 value = {formData.email}
-//                                 onChange={(e) => setFormData({...formData, email: e.target.value})}
-//                                 placeholder='ivanivanov@gmail.com'/>
-//                         </div>
-//                     </div>
-//                     <div>
-//                         <label htmlFor="password">Password</label>
-//                         <div>
-//                             <input 
-//                                 id= 'password'
-//                                 type= 'password'
-//                                 required
-//                                 value = {formData.password}
-//                                 onChange={(e) => setFormData({...formData, password: e.target.value})}
-//                                 placeholder='securepass123'/>
-//                         </div>
-//                     </div>
-//                     <div>
-//                         <label htmlFor="confirmPassword">Confirm password</label>
-//                         <div>
-//                             <input 
-//                                 id= 'confirmPassword'
-//                                 type= 'password'
-//                                 required
-//                                 value = {formData.confirmPassword}
-//                                 onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
-//                                 placeholder='securepass123'/>
-//                         </div>
-//                     </div>
-//                     <button type='submit' disabled={loading}>
-//                         {loading ? (
-//                             <>
-//                                 <Loader className='animate-spin' aria-hidden='true' />
-//                                 Loading ...
-//                             </>
-//                         ) : (
-//                             <>
-//                                 <UserPlus aria-hidden='true' />
-//                                 Sign up
-//                             </>
-//                         )}
-//                     </button>
-//                 </form>
-
-//                 <p>Already have an account? {" "} <Link to='/login'>Log in <ArrowRight className='inline h-4 w-4'/> </Link></p>
-//             </div>
-            
-//         </motion.div>
-//     </div>
-//   )
-// }
-
-// export default SignUpPage
-
 
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { UserPlus, ArrowRight, Loader } from "lucide-react";
+import { UserPlus, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { useUserStore } from "../stores/useUserStore";
 
@@ -122,7 +13,7 @@ const SignUpPage = () => {
     confirmPassword: "",
   });
 
-  const {signup, loading} =  useUserStore()
+  const {signup} =  useUserStore()
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -219,20 +110,10 @@ const SignUpPage = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            disabled={loading}
             className="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 disabled:opacity-50 flex justify-center items-center space-x-2"
           >
-            {loading ? (
-              <>
-                <Loader className="animate-spin w-5 h-5" aria-hidden="true" />
-                <span>Зарежда ...</span>
-              </>
-            ) : (
-              <>
-                <UserPlus className="w-5 h-5" aria-hidden="true" />
-                <span>Регистрирай се</span>
-              </>
-            )}
+            <UserPlus className="w-5 h-5" aria-hidden="true" />
+            <span>Регистрирай се</span>
           </button>
         </form>
 

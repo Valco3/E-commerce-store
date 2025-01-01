@@ -7,7 +7,6 @@ const RecommendedItems = () => {
 
 	useEffect(() => {
 		const fetchRecommendations = async () => {
-      //products/recommendations
 			try {
 				const res = await axios.get("/products/featured");
 				setRecommendations(res.data);

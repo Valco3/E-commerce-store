@@ -13,7 +13,6 @@ const CartPage = () => {
         <div className="py-8 md:py-16">
             <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
                 <div className="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
-                    {/* Left section: Cart items */}
                     <div className="lg:w-2/3 space-y-6">
                         {cart.length === 0 ? (
                             <div>

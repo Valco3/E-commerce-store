@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { UserPlus, ArrowRight, Loader, LogIn } from "lucide-react";
+import { ArrowRight, LogIn } from "lucide-react";
 import { motion } from "framer-motion";
 import { useUserStore } from "../stores/useUserStore";
 
@@ -10,7 +10,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
-  const {login, loading} =  useUserStore()
+  const {login} =  useUserStore()
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -32,8 +32,6 @@ const LoginPage = () => {
 
         <form onSubmit={handleSubmit} className="space-y-6">
 
-
-          {/* Email */}
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
               Имейл адрес
@@ -51,7 +49,6 @@ const LoginPage = () => {
             </div>
           </div>
 
-          {/* Password */}
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-gray-700">
               Парола
@@ -70,23 +67,12 @@ const LoginPage = () => {
           </div>
 
 
-          {/* Submit Button */}
           <button
             type="submit"
-            disabled={loading}
             className="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 disabled:opacity-50 flex justify-center items-center space-x-2"
           >
-            {loading ? (
-              <>
-                <Loader className="animate-spin w-5 h-5" aria-hidden="true" />
-                <span>Зарежда ...</span>
-              </>
-            ) : (
-              <>
-                <LogIn className="w-5 h-5" aria-hidden="true" />
-                <span>Вход</span>
-              </>
-            )}
+            <LogIn className="w-5 h-5" aria-hidden="true" />
+            <span>Вход</span>
           </button>
         </form>
 

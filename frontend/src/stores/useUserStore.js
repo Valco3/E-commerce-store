@@ -5,35 +5,37 @@ import {toast} from 'react-hot-toast'
 
 export const useUserStore = create((set, get) => ({
     user: null,
-    loading:false,
+    // loading:false,
     checkingAuth:true,
     season:"winter",
 
     signup: async ({name, email, password, confirmPassword}) => {
-        set({loading: true})
+        // set({loading: true})
 
         if(password !== confirmPassword) {
-            set({loading: false})
+            // set({loading: false})
             return toast.error('Паролите не съвпадат')
         }
             try {
                 const res = await axios.post('/auth/signup', {name, email, password});
-                set({user: res.data, loading: false})
+                set({user: res.data})
+                //, loading: false
             } catch (error) {
-                set({loading: false})
+                // set({loading: false})
                 toast.error(error.response.data.message || 'Something went wrong')
             }
         
     },
 
     login : async (email, password) => {
-        set({loading: true})
+        // set({loading: true})
         
         try {
             const res = await axios.post('/auth/login', {email, password});
-            set({user: res.data, loading: false})
+            set({user: res.data})
+            //, loading: false
         } catch (error) {
-            set({loading: false})
+            // set({loading: false})
             toast.error(error.response.data.message || 'Something went wrong')
         }
     },
