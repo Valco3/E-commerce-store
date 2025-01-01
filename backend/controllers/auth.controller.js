@@ -2,7 +2,6 @@ import User from "../models/user.model.js"
 import jwt from "jsonwebtoken"
 import {rtokens} from "../data/rtokens.js"
 import {v4 as uuidv4} from "uuid";
-import { decrypt } from "dotenv"
 
 const generateTokens = (userId) => {
     const accessToken = jwt.sign({userId}, process.env.JWT_ACCESS_SECRET, {expiresIn: "30m"})
