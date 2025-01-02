@@ -2,18 +2,20 @@ import {Link} from "react-router-dom"
 import { useEffect, useState } from "react"
 import axios from "../lib/axios"
 import { useCartStore } from "../stores/useCartStore"
+import {useUserStore} from "../stores/useUserStore"
 const PurchaseSuccessPage = () => {
     //mail to user
 
     const[isProcessing, setIsProcessing] = useState(true)
     const[error, setError] = useState(null)
     const {clearCart} = useCartStore()
+    const {user} = useUserStore()
 
     useEffect(() => {
         const handleCheckoutSuccess = async (sessionId) => {
 			try {
 				await axios.post("/payments/checkout-success", {
-					sessionId,
+					sessionId, user
 				});
                 console.log("Checkout success")
 				clearCart();
@@ -31,7 +33,7 @@ const PurchaseSuccessPage = () => {
 			setIsProcessing(false);
 			setError("No session ID found in the URL");
 		}
-	}, [clearCart]);
+	}, [clearCart, user]);
 
     if (isProcessing) return "Processing...";
 

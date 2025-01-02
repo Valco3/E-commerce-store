@@ -29,6 +29,18 @@ const userSchema = new mongoose.Schema({
             }
         }
     ],
+    reservedProducts: [
+        {
+        product: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Product"
+        },
+        quantity: {
+            type: Number,
+            default: 1
+        }
+        }
+    ],
     role: {
         type: String,
         enum: ["customer", "admin", "superadmin"],

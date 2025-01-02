@@ -54,7 +54,7 @@ if (checkingAuth) {
 						element={user ? <PurchaseSuccessPage /> : <Navigate to='/login' />}
 					/> */}
           <Route path='/purchase-success' element={user? <PurchaseSuccessPage/> : <Navigate to='/login'/>} />
-          <Route path='/purchase-cancel' element={user? <PurchaseCancelPage/> : <Navigate to='/login'/>} />
+          <Route path='/purchase-fail' element={user? <PurchaseCancelPage/> : <Navigate to='/login'/>} />
 
         </Routes>
       </div>

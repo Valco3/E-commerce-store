@@ -1,20 +1,29 @@
 import { useCartStore } from "../stores/useCartStore"
 import {loadStripe} from '@stripe/stripe-js'
 import axios from "../lib/axios"
+import toast from "react-hot-toast"
 const stripePromise = loadStripe("pk_test_51QMXjEAh9iV0onSy72M3hH5OkiXMAtRPgOfkfyY7GaqQYrAyXFVRBCRkIK3ZqXjAbloGJD7NzPdD3jed1MCkhivt00X0QJhRvK")
+import { useUserStore } from "../stores/useUserStore"
 
 const OrderSummary = () => {
   const {total, cart} = useCartStore();
+  const {user} = useUserStore();
   const formattedTotal = total.toFixed(2);
 
   const handleStripePayment = async () => {
-    const stripe = await stripePromise;
-    const res = await axios.post("/payments/create-checkout-session", {products: cart})
-    const session = res.data
-    const result = await stripe.redirectToCheckout({sessionId: session.id})
-    if (result.error) {
-      console.log(result.error.message);
+    try {
+      const stripe = await stripePromise;
+      const res = await axios.post("/payments/create-checkout-session", {products: cart, user:user})
+      const session = res.data
+      const result = await stripe.redirectToCheckout({sessionId: session.id})
+      if (result.error) {
+        console.log(result.error.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response?.data?.message || "Something went wrong");
     }
+ 
   }
   return (
     <div className="space-y-4 rounded-lg bg-gray-50 p-4 border sm:p-6 shadow-sm">
