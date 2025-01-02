@@ -5,8 +5,7 @@ import User from "../models/user.model.js"
 
 export const createCheckoutSession = async (req, res) => {
     try {
-        // console.log(req.body)
-        const {products} = req.body
+        const {products,} = req.body
         if(!Array.isArray(products) || products.length === 0) {
             return res.status(400).json({message: "Please provide an array of products"});
         }
@@ -26,15 +25,11 @@ export const createCheckoutSession = async (req, res) => {
             dbProduct.quantity -= product.quantity;
 
             reservedProducts.push({_id:dbProduct._id, quantity: product.quantity});
-            // console.log(dbProduct.reservedProducts)
-
 
             await dbProduct.save();
         }
-        // console.log(reservedProducts)
 
         const user = await User.findById(req.user._id);
-        // console.log(user)
         user.reservedProducts.push(...reservedProducts);
         await user.save();
 
@@ -66,7 +61,8 @@ export const createCheckoutSession = async (req, res) => {
             cancel_url: process.env.SAVE_MODE === "local" ? `${process.env.CLIENT_URL}/purchase-fail?session_id={CHECKOUT_SESSION_ID}` : "http://192.168.0.102:5173/purchase-fail?session_id={CHECKOUT_SESSION_ID}",
             metadata: {
                 userId: req.user._id.toString(),
-                products: JSON.stringify(products.map((product) => ({id: product._id, quantity: product.quantity, price: product.price})))
+                products: JSON.stringify(products.map((product) => ({id: product._id, quantity: product.quantity, price: product.price}))),
+                email: req.user.email
             }
              
         })

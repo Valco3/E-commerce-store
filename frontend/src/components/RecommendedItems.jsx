@@ -9,9 +9,11 @@ const RecommendedItems = () => {
 		const fetchRecommendations = async () => {
 			try {
 				const res = await axios.get("/products/featured");
-				setRecommendations(res.data);
+				setRecommendations(res.data.sort(() => Math.random() - 0.5)
+				.slice(0, 3));
+  
 			} catch (error) {
-				toast.error(error.response.data.message || "Грешка при извличането на предложени продукти");
+				toast.error(error.response.data.message || "Грешка при извличането на предложените продукти");
 			} 
 		};
 

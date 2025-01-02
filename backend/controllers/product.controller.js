@@ -89,30 +89,6 @@ export const deleteProduct = async (req, res) => {
     }
 }
 
-export const getRecommendations = async (req, res) => {
-    try {
-        const products = await Product.aggregate([
-            {$sample: {size: 3}},
-            {$project: {
-                _id: 1,
-                name: 1,
-                image: 1,
-                description: 1,
-                price: 1,
-                quantity: 1,
-                producer: 1
-            }
-        }
-        ])
-        console.log(products)
-        res.json(products)
-        
-    } catch (error) {
-        res.status(500).json({message: error.message})
-    }
-
-}
-
 export const getProductsByCategory = async (req, res) => {
     console.log("Someone attempted to get all products")
     try {

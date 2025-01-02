@@ -29,10 +29,6 @@ const productSchema = new mongoose.Schema({
         required: [true, "Please add a quantity"],
         min: 0
     },
-    reservedQuantity: {
-        type: Number,
-        default: 0
-    },
     image: {
         type: String,
         default: "",

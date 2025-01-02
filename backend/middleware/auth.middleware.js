@@ -33,3 +33,11 @@ export const adminRoute = async (req, res, next) => {
         return res.status(403).json({message: "Forbidden"})
     }
 }
+
+export const superAdminRoute = async (req, res, next) => {
+    if(req.user && (req.user.role === "superadmin")) {
+        next()
+    } else {
+        return res.status(403).json({message: "Forbidden"})
+    }
+}
