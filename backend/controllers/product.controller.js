@@ -1,10 +1,8 @@
 import Product from "../models/product.model.js";
 import {upload} from "../data/multer.js";
 import fs from "fs";
-import { get } from "http";
 
 export const getAllProducts = async (req, res) => {
-    console.log("Someone attemted to get all products")
     try {
         const products = await Product.find({});
         res.json({products})

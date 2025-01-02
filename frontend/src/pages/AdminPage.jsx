@@ -3,10 +3,12 @@ import { useEffect, useState } from "react";
 import AddProduct from "../components/AddProduct.jsx";
 import ManageProducts from "../components/ManageProducts.jsx";
 import { useProductStore } from "../stores/useProductStore.js";
+import ManageOrders from "../components/ManageOrders.jsx";
 
 const tabs = [
   { id: "add", label: "Добави продукт" },
   { id: "manage", label: "Управление на продукти" },
+  { id: "orders", label: "Управление на поръчки" },
 ];
 
 const AdminPage = () => {
@@ -43,7 +45,7 @@ const AdminPage = () => {
         <div className="bg-white shadow-md rounded-lg p-6">
           {activeTab === "add" && <AddProduct />}
           {activeTab === "manage" && <ManageProducts />}
-          {/* {activeTab === "analytics" && <Analytics />} */}
+          {activeTab === "orders" && <ManageOrders />}
         </div>
       </main>
     </div>

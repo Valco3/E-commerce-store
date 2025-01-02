@@ -5,7 +5,7 @@ import User from "../models/user.model.js"
 
 export const createCheckoutSession = async (req, res) => {
     try {
-        const {products,} = req.body
+        const {products} = req.body
         if(!Array.isArray(products) || products.length === 0) {
             return res.status(400).json({message: "Please provide an array of products"});
         }
@@ -61,7 +61,7 @@ export const createCheckoutSession = async (req, res) => {
             cancel_url: process.env.SAVE_MODE === "local" ? `${process.env.CLIENT_URL}/purchase-fail?session_id={CHECKOUT_SESSION_ID}` : "http://192.168.0.102:5173/purchase-fail?session_id={CHECKOUT_SESSION_ID}",
             metadata: {
                 userId: req.user._id.toString(),
-                products: JSON.stringify(products.map((product) => ({id: product._id, quantity: product.quantity, price: product.price}))),
+                products: JSON.stringify(products.map((product) => ({id: product._id, quantity: product.quantity, price: product.price, name: product.name}))),
                 email: req.user.email
             }
              
@@ -83,8 +83,11 @@ export const checkoutSuccess = async (req, res) => {
             const products = JSON.parse(session.metadata.products);
             const newOrder = new Order({
                 user:session.metadata.userId,
+                userName: user.name,
                 products: products.map(product => ({
+                    
                     product: product.id,
+                    productName: product.name,
                     quantity: product.quantity,
                     price: product.price
                 })),

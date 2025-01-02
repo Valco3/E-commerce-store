@@ -116,7 +116,7 @@ import { motion } from "framer-motion";
 const ManageProducts = () => {
   const { deleteProduct, products, toggleFeaturedProduct } = useProductStore();
 
-  console.log("Products", products);
+  // console.log("Products", products);
 
   return (
     <motion.div

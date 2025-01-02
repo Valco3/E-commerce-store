@@ -16,7 +16,7 @@ const PurchaseSuccessPage = () => {
       try {
         await axios.post("/payments/checkout-success", {
           sessionId,
-          user,
+          user
         });
         console.log("Checkout success");
         clearCart();

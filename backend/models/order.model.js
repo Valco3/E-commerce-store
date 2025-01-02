@@ -8,6 +8,10 @@ const orderSchema = new mongoose.Schema(
 			ref: "User",
 			required: true,
 		},
+		userName: {
+			type: String,
+			required: true,
+		},
 		status : {
 			type: String,
 			default: "pending",
@@ -17,6 +21,10 @@ const orderSchema = new mongoose.Schema(
 				product: {
 					type: mongoose.Schema.Types.ObjectId,
 					ref: "Product",
+					required: true,
+				},
+				productName: {
+					type: String,
 					required: true,
 				},
 				quantity: {
