@@ -1,11 +1,9 @@
-
-
 import { ShoppingCart, UserPlus, LogOut, Lock } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
-import { useUserStore } from '../stores/useUserStore.js';
-import { useCartStore } from '../stores/useCartStore.js';
-import Hamburger from 'hamburger-react';
+import { useUserStore } from "../stores/useUserStore.js";
+import { useCartStore } from "../stores/useCartStore.js";
+import Hamburger from "hamburger-react";
 
 const Navbar = () => {
   const { user, logout } = useUserStore();
@@ -59,8 +57,15 @@ const Navbar = () => {
               {isMenuOpen && (
                 <div className="absolute top-10 right-0 bg-white shadow-lg rounded-md p-4 z-50">
                   <nav className="space-y-4">
+                    {user && <span>{user.name}</span>}
                     {user && (
-                      <span>{user.name}</span>
+                      <Link
+                        to={`/user`}
+                        className="flex items-center space-x-2 text-gray-700 hover:text-blue-600"
+                      >
+                        <UserPlus className="w-5 h-5" />
+                        <span>Моят профил</span>
+                      </Link>
                     )}
                     {isAdmin && (
                       <Link

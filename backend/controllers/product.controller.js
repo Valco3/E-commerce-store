@@ -13,7 +13,7 @@ export const getAllProducts = async (req, res) => {
 
 export const getFeaturedProducts = async (req, res) => {
     try {
-        let featuredProducts = await Product.find({isFeatured: true}).lean();
+        let featuredProducts = await Product.find({isFeatured: true});
         if(!featuredProducts){
             return res.status(404).json({message: "No featured products found"});
         }
@@ -88,7 +88,6 @@ export const deleteProduct = async (req, res) => {
 }
 
 export const getProductsByCategory = async (req, res) => {
-    console.log("Someone attempted to get all products")
     try {
         const {category} = req.params
         const products = await Product.find({category})
@@ -111,4 +110,19 @@ export const toggleFeatured = async (req, res) => {
     } catch (error) {
         res.status(500).json({message: error.message})
     }
+}
+
+export const updateProduct = async (req, res) => {
+    try {
+        console.log("product update attempt")
+        const {id} = req.params
+        const productDB = await Product.findByIdAndUpdate(id, req.body.productData, { new: true });
+        // console.log(req.body)
+        // console.log(productDB)
+        
+        res.json(productDB)
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+    
 }

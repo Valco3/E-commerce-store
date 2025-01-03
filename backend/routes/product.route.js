@@ -1,6 +1,6 @@
 import express from "express";
 import {protectRoute, adminRoute, superAdminRoute} from "../middleware/auth.middleware.js"
-import {getAllProducts, getFeaturedProducts, createProduct, deleteProduct, getProductsByCategory, toggleFeatured} from "../controllers/product.controller.js";
+import {getAllProducts, getFeaturedProducts, createProduct, deleteProduct, getProductsByCategory, toggleFeatured, updateProduct} from "../controllers/product.controller.js";
 
 
 const router = express.Router();
@@ -11,5 +11,6 @@ router.get("/category/:category", getProductsByCategory)
 router.post("/", protectRoute, superAdminRoute, createProduct)
 router.patch("/:id", protectRoute, superAdminRoute, toggleFeatured)
 router.delete("/:id", protectRoute, superAdminRoute, deleteProduct)
+router.patch("/update/:id", protectRoute, superAdminRoute, updateProduct)
 
 export default router;

@@ -8,6 +8,7 @@ import Navbar from './components/Navbar.jsx'
 import CartPage from './pages/CartPage.jsx'
 import PurchaseSuccessPage from './pages/PurchaseSuccessPage.jsx'
 import PurchaseCancelPage from './pages/PurchaseCancelPage.jsx'
+import UserPage from './pages/UserPage.jsx'
 import { Toaster } from 'react-hot-toast'
 import { useUserStore } from './stores/useUserStore.js'
 import { useEffect } from 'react'
@@ -28,15 +29,12 @@ function App() {
   useEffect(() => {
     document.title = 'Спрингмарт';
 }, []);
-//#cbd5e1  bg-slate-200
-console.log(user)
 if (checkingAuth) {
-  return <div>Loading...</div>; // Render a loading spinner or placeholder
+  return <div>Loading...</div>; 
 }
   return (
     <div className='min-h-screen bg-slate-300 text-stone-900 relative overflow-hidden'>
       
-      {/* pt-20 */}
       <div className='relative z-50 pt-0'>
         <Navbar />
         {/* <img src={'http://localhost:5000/images/b71fafb0-b585-4bb9-9b8b-32f9915de5aa.jpg'} alt="Category Fruit" /> */}
@@ -48,14 +46,9 @@ if (checkingAuth) {
           <Route path='/admin' element={user?.role === "admin" || user?.role === "superadmin" ? <AdminPage /> : <Navigate to='/'/>}/>
           <Route path='/category/:category' element={<CategoryPage/>}/>
           <Route path='/cart' element={user? <CartPage/> : <Navigate to='/login'/>}/> 
-          {/* <Route path='/purchase-success' element={user? <PurchaseSuccessPage/> : <Navigate to= '/login'/>} /> */}
-          {/* <Route
-						path='/purchase-success'
-						element={user ? <PurchaseSuccessPage /> : <Navigate to='/login' />}
-					/> */}
           <Route path='/purchase-success' element={user? <PurchaseSuccessPage/> : <Navigate to='/login'/>} />
           <Route path='/purchase-fail' element={user? <PurchaseCancelPage/> : <Navigate to='/login'/>} />
-
+          <Route path='/user' element={user? <UserPage/> : <Navigate to='/login'/>} />
         </Routes>
       </div>
       <Toaster/>

@@ -1,39 +1,33 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, LogIn } from "lucide-react";
-import { motion } from "framer-motion";
 import { useUserStore } from "../stores/useUserStore";
 
-
 const LoginPage = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-
-  const {login} =  useUserStore()
+  const { login } = useUserStore();
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    console.log(email, password)
-    login(email, password)
-  }
+    e.preventDefault();
+    console.log(email, password);
+    login(email, password);
+  };
 
   return (
     <div className="min-h-screen bg-gray-200 flex items-center justify-center text-stone-900">
-      <motion.div
-        className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.2 }}
-      >
+      <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
         <h2 className="text-2xl font-bold text-center text-blue-600 mb-6">
           Вход в профил
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700"
+            >
               Имейл адрес
             </label>
             <div className="mt-1">
@@ -50,7 +44,10 @@ const LoginPage = () => {
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700"
+            >
               Парола
             </label>
             <div className="mt-1">
@@ -66,7 +63,6 @@ const LoginPage = () => {
             </div>
           </div>
 
-
           <button
             type="submit"
             className="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 disabled:opacity-50 flex justify-center items-center space-x-2"
@@ -76,7 +72,6 @@ const LoginPage = () => {
           </button>
         </form>
 
-        {/* Login Redirect */}
         <p className="mt-4 text-sm text-center text-gray-600">
           Нямаш профил?{" "}
           <Link
@@ -86,9 +81,9 @@ const LoginPage = () => {
             Регистрирай се <ArrowRight className="inline h-4 w-4" />
           </Link>
         </p>
-      </motion.div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default LoginPage
+export default LoginPage;

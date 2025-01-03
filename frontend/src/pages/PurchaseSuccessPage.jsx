@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
 import axios from "../lib/axios";
 import { useCartStore } from "../stores/useCartStore";
 import { useUserStore } from "../stores/useUserStore";
@@ -16,7 +15,7 @@ const PurchaseSuccessPage = () => {
       try {
         await axios.post("/payments/checkout-success", {
           sessionId,
-          user
+          user,
         });
         console.log("Checkout success");
         clearCart();
@@ -27,7 +26,9 @@ const PurchaseSuccessPage = () => {
       }
     };
 
-    const sessionId = new URLSearchParams(window.location.search).get("session_id");
+    const sessionId = new URLSearchParams(window.location.search).get(
+      "session_id"
+    );
     if (sessionId) {
       handleCheckoutSuccess(sessionId);
     } else {
@@ -39,14 +40,9 @@ const PurchaseSuccessPage = () => {
   if (isProcessing) {
     return (
       <div className="min-h-screen bg-gray-200 flex items-center justify-center text-stone-900">
-        <motion.div
-          className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md text-center"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          <h2 className="text-lg font-medium text-blue-600">Processing your order...</h2>
-        </motion.div>
+        <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md text-center">
+          <h2 className="text-lg font-medium text-blue-600">Обработка...</h2>
+        </div>
       </div>
     );
   }
@@ -54,32 +50,22 @@ const PurchaseSuccessPage = () => {
   if (error) {
     return (
       <div className="min-h-screen bg-gray-200 flex items-center justify-center text-stone-900">
-        <motion.div
-          className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md text-center"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
+        <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md text-center">
           <h2 className="text-lg font-medium text-red-600">Error: {error}</h2>
           <Link
             to="/"
             className="text-blue-600 hover:text-blue-800 font-medium mt-4 block"
           >
-            Go back to home
+            Възникна грешка. Върнете се на началната страница
           </Link>
-        </motion.div>
+        </div>
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-gray-200 flex items-center justify-center text-stone-900">
-      <motion.div
-        className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.2 }}
-      >
+      <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
         <h2 className="text-2xl font-bold text-center text-blue-600 mb-6">
           Вашата поръчка беше успешна!
         </h2>
@@ -92,7 +78,7 @@ const PurchaseSuccessPage = () => {
         >
           Начална страница
         </Link>
-      </motion.div>
+      </div>
     </div>
   );
 };

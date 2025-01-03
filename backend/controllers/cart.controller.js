@@ -58,9 +58,6 @@ export const updateQuantity = async (req, res) => {
         }
 
         const productInDatabase = await Product.findById(productId);
-        console.log(productInDatabase);
-        
-        console.log(quantity);
         if (quantity < 0) {
             return res.status(400).json({ message: "Quantity cannot be negative" });
         }

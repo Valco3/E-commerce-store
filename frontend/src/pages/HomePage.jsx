@@ -1,4 +1,3 @@
-
 import CategoryItem from "../components/CategoryItem";
 import Snowfall from "react-snowfall";
 import { useUserStore } from "../stores/useUserStore";

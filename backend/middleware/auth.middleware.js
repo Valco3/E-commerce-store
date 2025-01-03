@@ -17,7 +17,7 @@ export const protectRoute = async (req, res, next) => {
             next()
         } catch (error) {
             if(error.name === "TokenExpiredError") {
-                return res.status(401).json({message: "Access token expired"})
+                return res.status(401).json({message: "Сесията Ви е изтекла"})
             }
             throw error
         }
@@ -30,7 +30,7 @@ export const adminRoute = async (req, res, next) => {
     if(req.user && (req.user.role === "admin" || req.user.role === "superadmin")) {
         next()
     } else {
-        return res.status(403).json({message: "Forbidden"})
+        return res.status(403).json({message: "Нямате достъп"})
     }
 }
 
@@ -38,6 +38,6 @@ export const superAdminRoute = async (req, res, next) => {
     if(req.user && (req.user.role === "superadmin")) {
         next()
     } else {
-        return res.status(403).json({message: "Forbidden"})
+        return res.status(403).json({message: "Нямате достъп"})
     }
 }

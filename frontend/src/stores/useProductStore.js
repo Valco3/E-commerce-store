@@ -1,7 +1,6 @@
 import {create} from 'zustand'
 import toast from 'react-hot-toast'
 import axios from '../lib/axios'
-// import { deleteProduct, toggleFeatured } from '../../../backend/controllers/product.controller'
 
 export const useProductStore = create((set) => ({
     products: [],
@@ -53,6 +52,18 @@ export const useProductStore = create((set) => ({
             set({products: response.data.products})
         } catch (error) {
             toast.error(error.response.data.message || 'Грешка при извличане на категория продукти')
+        }
+    },
+
+
+    updateProduct : async (productData) => {
+        try {
+            console.log(productData)
+            const id = productData._id
+            const res = await axios.patch(`/products/update/${id}`, {productData});
+            set((previousState) => ({products: previousState.products.map((product) => product._id === productData._id ? res.data : product)}))
+        } catch (error) {
+            toast.error(error.response.data.message || 'Грешка при редактиране на продукт')
         }
     }
 }))

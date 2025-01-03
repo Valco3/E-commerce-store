@@ -236,22 +236,10 @@ const AddProduct = () => {
 
           <button
             type="submit"
-            // disabled={loading}
             className="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 disabled:opacity-50 flex justify-center items-center space-x-2"
           >
             <PlusCircle className="w-5 h-5" aria-hidden="true" />
             <span>Добави продукт</span>
-            {/* {loading ? (
-              <>
-                <Loader className="animate-spin w-5 h-5" aria-hidden="true" />
-                <span>Добавяне...</span>
-              </>
-            ) : (
-              <>
-                <PlusCircle className="w-5 h-5" aria-hidden="true" />
-                <span>Добави продукт</span>
-              </>
-            )} */}
           </button>
         </form>
       </div>

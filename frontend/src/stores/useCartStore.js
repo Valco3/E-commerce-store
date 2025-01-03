@@ -12,7 +12,7 @@ export const useCartStore = create((set, get) => ({
         try {
             const res = await axios.get("/cart");
             set({ cart: res.data });
-            get().calculateTotal(); // Ensure correct spelling
+            get().calculateTotal(); 
         } catch (error) {
             set({ cart: [] });
             toast.error(error.response?.data?.message || "Something went wrong");
@@ -36,7 +36,7 @@ export const useCartStore = create((set, get) => ({
                 return { cart: newCart };
             });
 
-            get().calculateTotal(); // Ensure correct function call
+            get().calculateTotal(); 
         } catch (error) {
             toast.error(error.response?.data?.message || "An error occurred");
         }
@@ -44,7 +44,7 @@ export const useCartStore = create((set, get) => ({
 
     calculateTotal: () => {
         const { cart } = get();
-        const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0); // Fixed typo
+        const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
         set({ total });
     },
 

@@ -22,20 +22,20 @@ const setCookies = (res, accessToken, refreshToken, uniqueId) => {
     res.cookie("accessToken", accessToken, {
         httpOnly: true,
         sameSite: "strict",
-        secure: process.env.NODE_ENV === "production",
+        secure: false,
         maxAge: 30 * 60 *  1000
     })
     res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
         sameSite: "strict",
-        secure: process.env.NODE_ENV === "production",
+        secure: false,
         maxAge: 30 * 24 * 60 * 60 * 1000
     })
 
     res.cookie("uniqueId", uniqueId, {
         httpOnly: true,
         sameSite: "strict",
-        secure: process.env.NODE_ENV === "production",
+        secure: false,
         maxAge: 30 * 24 * 60 * 60 * 1000
     })
 }
