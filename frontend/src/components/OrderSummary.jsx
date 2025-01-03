@@ -50,7 +50,7 @@ const OrderSummary = () => {
         onClick={handleStripePayment}
         disabled={isProcessing} 
       >
-        {isProcessing ? "Processing..." : "Направи поръчка"}
+        {isProcessing ? "Обработка..." : "Направи поръчка"}
       </button>
     </div>
   );
